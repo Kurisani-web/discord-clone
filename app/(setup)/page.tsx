@@ -1,3 +1,4 @@
+import { InitialModal } from "@/components/modals/initial-modal";
 import { db } from "@/lib/db";
 import { initialProfile } from "@/lib/initial-profile";
 import { Profile, Server } from "@prisma/client";
@@ -7,7 +8,7 @@ import React from "react";
 const SetupPage = async () => {
   const profile: Profile | any = await initialProfile();
 
-  const server: Server | any = db.server.findFirst({
+  const server: Server | any = await db.server.findFirst({
     where: {
       members: {
         some: {
@@ -20,7 +21,7 @@ const SetupPage = async () => {
   if (server) {
     return redirect(`/servers/${server.id}`);
   }
-  return <div>SetupPage</div>;
+  return <InitialModal />;
 };
 
 export default SetupPage;
