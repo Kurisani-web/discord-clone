@@ -22,6 +22,7 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useEffect, useState } from "react";
+import FileUpload from "../file-upload";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -105,7 +106,21 @@ export const InitialModal = () => {
               item-center
               "
               >
-                TODO:Image Upload
+                <FormField
+                  control={form.control}
+                  name="imageUrl"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <FileUpload
+                          endpoint="serverImage"
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
               </div>
               <FormField
                 control={form.control}
