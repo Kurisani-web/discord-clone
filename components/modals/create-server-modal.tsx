@@ -155,6 +155,7 @@ export const CreateServerModal = () => {
                         disabled={isLoading}
                         className="
                       bg-zinc-300/50
+                      dark:bg-zinc-300/50
                       border-0
                       focus-visible:ring-0
                       text-black
