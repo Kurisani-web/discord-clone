@@ -2,13 +2,15 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { RedirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import React from "react";
+import { FC } from "react";
 
+// This is how Next.js expects it — as a plain object, not a Promise
 interface InviteCodePageProps {
   params: {
     inviteCode: string;
   };
 }
+
 const InviteCodePage = async ({ params }: InviteCodePageProps) => {
   const profile = await currentProfile();
 
@@ -16,7 +18,7 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
     return <RedirectToSignIn />;
   }
 
-  if (!params.inviteCode) {
+  if (!params?.inviteCode) {
     return redirect("/");
   }
 
@@ -41,11 +43,7 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
     },
     data: {
       members: {
-        create: [
-          {
-            profileId: profile.id,
-          },
-        ],
+        create: [{ profileId: profile.id }],
       },
     },
   });
@@ -53,7 +51,8 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
   if (server) {
     return redirect(`/servers/${server.id}`);
   }
-  return <div>InviteCodePage</div>;
+
+  return <div>Invalid invite code.</div>;
 };
 
 export default InviteCodePage;
