@@ -2,10 +2,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { currentProfile } from '@/lib/current-profile';
 import { db } from '@/lib/db';
 import { NextRequest, NextResponse } from 'next/server';
+import type { RouteHandlerContext } from 'next/dist/server/web/types';
 
 export async function PATCH(
   request: NextRequest,
-  context: { params: { serverId: string } }
+  context: RouteHandlerContext<{ serverId: string }>
 ) {
   try {
     const profile = await currentProfile();
@@ -35,4 +36,4 @@ export async function PATCH(
     console.error('[SERVER_ID]', error);
     return new NextResponse('Internal Server Error', { status: 500 });
   }
-}
+                                                       }
