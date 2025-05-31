@@ -35,4 +35,4 @@ export async function PATCH(
     console.error('[SERVER_ID]', error);
     return new NextResponse('Internal Server Error', { status: 500 });
   }
-}
+      }
