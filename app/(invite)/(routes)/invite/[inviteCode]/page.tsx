@@ -4,18 +4,16 @@ import { db } from "@/lib/db";
 import { RedirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-export default async function InviteCodePage({
-  params,
-}: {
-  params: { inviteCode: string };
-}): Promise<ReactNode> {
+type Params = Promise<{ inviteCode: string }>;
+
+export default async function InviteCodePage({ params }: { params: Params }): Promise<ReactNode> {
   const profile = await currentProfile();
 
   if (!profile) {
     return <RedirectToSignIn />;
   }
 
-  const { inviteCode } = params;
+  const { inviteCode } = await params;
 
   if (!inviteCode) {
     return redirect("/");
@@ -56,5 +54,4 @@ export default async function InviteCodePage({
   }
 
   return <div>InviteCodePage</div>;
-        
 }
