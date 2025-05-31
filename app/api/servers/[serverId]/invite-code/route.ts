@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { serverId: string } }
+  context: { params: { serverId: string } } // or `any` as fallback
 ) {
   try {
     const profile = await currentProfile();
@@ -14,7 +14,7 @@ export async function PATCH(
       return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const { serverId } = params;
+    const { serverId } = context.params;
 
     if (!serverId) {
       return new NextResponse('Server ID is missing', { status: 400 });
@@ -35,4 +35,4 @@ export async function PATCH(
     console.error('[SERVER_ID]', error);
     return new NextResponse('Internal Server Error', { status: 500 });
   }
-      }
+        }
