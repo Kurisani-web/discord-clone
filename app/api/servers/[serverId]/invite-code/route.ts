@@ -1,24 +1,23 @@
-import { v4 as uuidv4 } from "uuid";
-import { currentProfile } from "@/lib/current-profile";
-import { db } from "@/lib/db";
-import { NextRequest, NextResponse } from "next/server";
+import { v4 as uuidv4 } from 'uuid';
+import { currentProfile } from '@/lib/current-profile';
+import { db } from '@/lib/db';
+import { NextRequest, NextResponse } from 'next/server';
 
-// The second param must follow the type: { params: Record<string, string> }
 export async function PATCH(
-  req: NextRequest,
-  { params }: { params: { serverId: string } }
+  request: NextRequest,
+  context: { params: { serverId: string } }
 ) {
   try {
     const profile = await currentProfile();
 
     if (!profile) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse('Unauthorized', { status: 401 });
     }
 
-    const serverId = params.serverId;
+    const { serverId } = context.params;
 
     if (!serverId) {
-      return new NextResponse("Server ID Is Missing", { status: 400 });
+      return new NextResponse('Server ID is missing', { status: 400 });
     }
 
     const server = await db.server.update({
@@ -33,7 +32,7 @@ export async function PATCH(
 
     return NextResponse.json(server);
   } catch (error) {
-    console.error("[SERVER_ID_PATCH_ERROR]", error);
-    return new NextResponse("Internal Server Error", { status: 500 });
+    console.error('[SERVER_ID]', error);
+    return new NextResponse('Internal Server Error', { status: 500 });
   }
 }
