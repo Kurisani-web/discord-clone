@@ -2,12 +2,11 @@ import { v4 as uuidv4 } from "uuid";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export async function PATCH(
-  req: Request,
-  {
-    params,
-  }: {
+  req: NextRequest,
+  context: {
     params: {
       serverId: string;
     };
@@ -20,13 +19,15 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (!params.serverId) {
+    const { serverId } = context.params;
+
+    if (!serverId) {
       return new NextResponse("Server ID Is Missing", { status: 404 });
     }
 
     const server = await db.server.update({
       where: {
-        id: params.serverId,
+        id: serverId,
         profileId: profile.id,
       },
       data: {
@@ -39,4 +40,4 @@ export async function PATCH(
     console.log("[SERVER_ID]", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
-}
+                              }
