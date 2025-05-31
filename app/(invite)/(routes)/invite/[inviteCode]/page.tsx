@@ -1,8 +1,8 @@
+import { ReactNode } from "react";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { RedirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { ReactNode } from "react";
 
 export default async function InviteCodePage({
   params,
@@ -56,4 +56,4 @@ export default async function InviteCodePage({
   }
 
   return <div>InviteCodePage</div>;
-    }
+        }
