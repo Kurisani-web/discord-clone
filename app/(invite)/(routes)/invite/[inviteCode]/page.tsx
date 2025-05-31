@@ -56,4 +56,5 @@ export default async function InviteCodePage({
   }
 
   return <div>InviteCodePage</div>;
-        }
+        
+}
