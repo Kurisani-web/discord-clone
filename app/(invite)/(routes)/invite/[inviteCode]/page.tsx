@@ -2,12 +2,13 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { RedirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { ReactNode } from "react";
 
 export default async function InviteCodePage({
   params,
 }: {
   params: { inviteCode: string };
-}) {
+}): Promise<ReactNode> {
   const profile = await currentProfile();
 
   if (!profile) {
@@ -55,4 +56,4 @@ export default async function InviteCodePage({
   }
 
   return <div>InviteCodePage</div>;
-        }
+    }
